@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v1.8.0
+
+[compare changes](https://github.com/khawarizmus/powersync-nuxt/compare/v1.7.0...v1.8.0)
+
+### 🚀 Enhancements
+
+- Added Rust client interceptor to support Rust client implementation ([e8092e6](https://github.com/khawarizmus/powersync-nuxt/commit/e8092e6))
+
+### 🏡 Chore
+
+- **release:** V1.7.0 ([c68a1ca](https://github.com/khawarizmus/powersync-nuxt/commit/c68a1ca))
+
+### ❤️ Contributors
+
+- Amine <amine@powersync.com>
+- Khawarizmus
+
 ## v1.7.0
 
 [compare changes](https://github.com/khawarizmus/powersync-nuxt/compare/v1.6.2...v1.7.0)
