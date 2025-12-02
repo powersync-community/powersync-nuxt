@@ -18,9 +18,9 @@ export default defineNuxtPlugin({
 
     const connector = new SupabaseConnector()
 
-    await db.connect(connector, {
-      clientImplementation: SyncClientImplementation.JAVASCRIPT,
-    })
+    await db.init()
+
+    await db.connect(connector)
 
     const plugin = createPowerSyncPlugin({ database: db })
 

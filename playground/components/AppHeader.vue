@@ -1,8 +1,11 @@
 <script setup lang="ts">
 const client = useSupabaseClient()
 const user = useSupabaseUser()
+const powerSync = usePowerSync()
 
 const logout = async () => {
+  await powerSync.value.disconnectAndClear()
+
   await client.auth.signOut()
   navigateTo('/login')
 }

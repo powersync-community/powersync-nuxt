@@ -41,6 +41,10 @@ export default defineNuxtConfig({
     },
   },
 
+  unocss: {
+    autoImport: false,
+  },
+
   eslint: {
     config: {
       stylistic: true,
@@ -65,9 +69,5 @@ export default defineNuxtConfig({
         persistSession: true,
       },
     },
-  },
-
-  unocss: {
-    autoImport: false,
   },
 })

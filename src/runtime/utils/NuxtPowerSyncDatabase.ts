@@ -1,5 +1,6 @@
 import {
   PowerSyncDatabase,
+  SyncClientImplementation,
   WASQLiteVFS,
   WebRemote,
   WebStreamingSyncImplementation,
@@ -16,6 +17,7 @@ import { usePowerSyncInspector } from '../composables/usePowerSyncInspector'
 import { useDiagnosticsLogger } from '../composables/useDiagnosticsLogger'
 import { ref, type Ref } from 'vue'
 import { useRuntimeConfig } from '#app'
+import { RustClientInterceptor } from './RustClientInterceptor'
 
 export class NuxtPowerSyncDatabase extends PowerSyncDatabase {
   private schemaManager!: DynamicSchemaManager
@@ -66,34 +68,30 @@ export class NuxtPowerSyncDatabase extends PowerSyncDatabase {
     }
   }
 
-  protected override generateBucketStorageAdapter() {
-    const useDiagnostics = useRuntimeConfig().public.powerSyncModuleOptions.useDiagnostics ?? false
-    if (useDiagnostics) {
-      const { getCurrentSchemaManager } = usePowerSyncInspector()
-
-      const currentSchemaManager = getCurrentSchemaManager()
-      const schemaManager = currentSchemaManager || this.schemaManager
-
-      const adapter = new RecordingStorageAdapter(
-        ref(this) as Ref<PowerSyncDatabase>,
-        ref(schemaManager) as Ref<DynamicSchemaManager>,
-      )
-
-      return adapter
-    }
-    else {
-      return super.generateBucketStorageAdapter()
-    }
-  }
-
   protected override generateSyncStreamImplementation(
     connector: PowerSyncBackendConnector,
     options: RequiredAdditionalConnectionOptions,
   ): StreamingSyncImplementation {
     if (this.useDiagnostics) {
       const { logger } = useDiagnosticsLogger()
+      const { getCurrentSchemaManager } = usePowerSyncInspector()
+
+      const currentSchemaManager = getCurrentSchemaManager()
+      const schemaManager = currentSchemaManager || this.schemaManager
+
+      const adapter = this.connectionOptions?.clientImplementation === SyncClientImplementation.JAVASCRIPT
+        ? new RecordingStorageAdapter(
+          ref(this) as Ref<PowerSyncDatabase>,
+          ref(schemaManager) as Ref<DynamicSchemaManager>,
+        )
+        : new RustClientInterceptor(
+          ref(this) as Ref<PowerSyncDatabase>,
+          new WebRemote(connector, logger),
+          ref(schemaManager) as Ref<DynamicSchemaManager>,
+        )
+
       return new WebStreamingSyncImplementation({
-        adapter: this.bucketStorageAdapter, // This should be our RecordingStorageAdapter
+        adapter,
         remote: new WebRemote(connector, logger),
         uploadCrud: async () => {
           await this.waitForReady()
