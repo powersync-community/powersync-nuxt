@@ -367,11 +367,86 @@ This module automatically exposes all composables from `@powersync/vue`, so you 
 
 All of these composables are available globally in your Nuxt app - no imports needed!
 
+### Classes
+
+#### `NuxtPowerSyncDatabase`
+
+An extended PowerSync database class that includes diagnostic capabilities for use with the PowerSync Inspector.
+
+**Usage**:
+
+```typescript
+import { NuxtPowerSyncDatabase } from '@powersync/nuxt'
+
+const db = new NuxtPowerSyncDatabase({
+  database: {
+    dbFilename: 'your-db-filename.sqlite',
+  },
+  schema: yourSchema,
+})
+```
+
+**Features**:
+
+- **Automatic Diagnostics**: When `useDiagnostics: true` is set in module config, automatically enables diagnostics recording
+- **Connector Storage**: Stores connector internally for inspector access
+- **Enhanced VFS**: Uses cooperative sync VFS for improved compatibility
+- **Schema Management**: Integrates with dynamic schema management for inspector features
+- **Logging**: Automatically configures logging when diagnostics are enabled
+
+**Note**: The class works with or without diagnostics enabled. When diagnostics are disabled, it behaves like a standard `PowerSyncDatabase`.
+
 ### Module Composables
+
+#### `usePowerSyncKysely<T>()`
+
+Provides a Kysely-wrapped PowerSync database for type-safe database queries.
+
+**Type Parameters**:
+- `T` - Your database type (from your schema)
+
+**Returns**: Kysely database instance (not `{ db }`)
+
+**Usage**:
+
+```typescript
+import { usePowerSyncKysely } from '@powersync/nuxt'
+import { type Database } from '../powersync/AppSchema'
+
+// Returns db directly, not { db }
+const db = usePowerSyncKysely<Database>()
+
+// Use Kysely query builder
+const users = await db.selectFrom('users').selectAll().execute()
+```
+
+#### `useDiagnosticsLogger()`
+
+Provides a logger configured for PowerSync diagnostics.
+
+**Returns**:
+
+```typescript
+{
+  logger: ILogHandler
+  logsStorage: Storage
+  emitter: Emitter
+}
+```
+
+**Usage**:
+
+```typescript
+const { logger } = useDiagnosticsLogger()
+
+// Logger is automatically configured for diagnostics
+// Use it in your PowerSync setup if needed
+```
+
 
 #### `usePowerSyncInspector()`
 
-The main composable for setting up PowerSync Inspector functionality. This composable provides utilities for schema management and diagnostics setup.
+A composable for setting up PowerSync Inspector functionality. This composable provides utilities for schema management and diagnostics setup.
 
 **Returns**:
 
@@ -505,80 +580,6 @@ const {
   </div>
 </template>
 ```
-
-#### `usePowerSyncKysely<T>()`
-
-Provides a Kysely-wrapped PowerSync database for type-safe database queries.
-
-**Type Parameters**:
-- `T` - Your database type (from your schema)
-
-**Returns**: Kysely database instance (not `{ db }`)
-
-**Usage**:
-
-```typescript
-import { usePowerSyncKysely } from '@powersync/nuxt'
-import { type Database } from '../powersync/AppSchema'
-
-// Returns db directly, not { db }
-const db = usePowerSyncKysely<Database>()
-
-// Use Kysely query builder
-const users = await db.selectFrom('users').selectAll().execute()
-```
-
-#### `useDiagnosticsLogger()`
-
-Provides a logger configured for PowerSync diagnostics.
-
-**Returns**:
-
-```typescript
-{
-  logger: ILogHandler
-  logsStorage: Storage
-  emitter: Emitter
-}
-```
-
-**Usage**:
-
-```typescript
-const { logger } = useDiagnosticsLogger()
-
-// Logger is automatically configured for diagnostics
-// Use it in your PowerSync setup if needed
-```
-
-### Classes
-
-#### `NuxtPowerSyncDatabase`
-
-An extended PowerSync database class that includes diagnostic capabilities for use with the PowerSync Inspector.
-
-**Usage**:
-
-```typescript
-import { NuxtPowerSyncDatabase } from '@powersync/nuxt'
-
-const db = new NuxtPowerSyncDatabase({
-  database: {
-    dbFilename: 'your-db-filename.sqlite',
-  },
-  schema: yourSchema,
-})
-```
-
-**Features**:
-
-- **Automatic Diagnostics**: When `useDiagnostics: true` is set in module config, automatically enables diagnostics recording
-- **Connector Storage**: Stores connector internally for inspector access
-- **Enhanced VFS**: Uses cooperative sync VFS for improved compatibility
-- **Schema Management**: Integrates with dynamic schema management for inspector features
-- **Logging**: Automatically configures logging when diagnostics are enabled
-
-**Note**: The class works with or without diagnostics enabled. When diagnostics are disabled, it behaves like a standard `PowerSyncDatabase`.
 
 ## Known Issues
 
