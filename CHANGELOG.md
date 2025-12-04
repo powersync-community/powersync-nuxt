@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v1.9.0
+
+[compare changes](https://github.com/khawarizmus/powersync-nuxt/compare/v1.8.0...v1.9.0)
+
+### 🚀 Enhancements
+
+- Enhance README with installation instructions, features overview, and PowerSync setup guide ([37f8e49](https://github.com/khawarizmus/powersync-nuxt/commit/37f8e49))
+
+### 🏡 Chore
+
+- **release:** V1.8.0 ([eb23d06](https://github.com/khawarizmus/powersync-nuxt/commit/eb23d06))
+
+### ❤️ Contributors
+
+- Amine <amine@powersync.com>
+- Khawarizmus
+
 ## v1.8.0
 
 [compare changes](https://github.com/khawarizmus/powersync-nuxt/compare/v1.7.0...v1.8.0)
