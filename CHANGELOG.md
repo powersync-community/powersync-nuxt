@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v1.9.1
+
+[compare changes](https://github.com/khawarizmus/powersync-nuxt/compare/v1.9.0...v1.9.1)
+
+### 📖 Documentation
+
+- Update README to reflect package name change to @powersync/nuxt, and improved readme flow ([13fee7a](https://github.com/khawarizmus/powersync-nuxt/commit/13fee7a))
+
+### 🏡 Chore
+
+- **release:** V1.9.0 ([a538fd8](https://github.com/khawarizmus/powersync-nuxt/commit/a538fd8))
+
+### ❤️ Contributors
+
+- Amine <amine@powersync.com>
+- Khawarizmus
+
 ## v1.9.0
 
 [compare changes](https://github.com/khawarizmus/powersync-nuxt/compare/v1.8.0...v1.9.0)
