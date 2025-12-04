@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v1.9.2
+
+[compare changes](https://github.com/khawarizmus/powersync-nuxt/compare/v1.9.1...v1.9.2)
+
+### 📖 Documentation
+
+- Reshuffled some readme content ([597b6a2](https://github.com/khawarizmus/powersync-nuxt/commit/597b6a2))
+
+### 🏡 Chore
+
+- **release:** V1.9.1 ([6e8fa33](https://github.com/khawarizmus/powersync-nuxt/commit/6e8fa33))
+
+### ❤️ Contributors
+
+- Amine <amine@powersync.com>
+- Khawarizmus
+
 ## v1.9.1
 
 [compare changes](https://github.com/khawarizmus/powersync-nuxt/compare/v1.9.0...v1.9.1)
